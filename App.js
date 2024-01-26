@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, FlatList, SafeAreaView, TextInput, Button, Alert } from 'react-native';
+import { StyleSheet, Text, View, FlatList, SafeAreaView, TextInput, Button, Alert, Pressable } from 'react-native';
 
 let sampleGoals = [{
   id: "1",
@@ -47,8 +47,8 @@ let sampleGoals = [{
 const Item = ({ id, name, onDelete }) => (
   <View style={styles.item}>
     <Text style={styles.name}>{name}</Text>
-    <Button title=" ᙭" onPress={onDelete}
-    style={styles.buttonX} />
+    <Pressable  onPress={onDelete}
+    style={styles.buttonX} ><Text style={styles.delete}>✘</Text></Pressable>
   </View>
 );
 
@@ -94,15 +94,12 @@ const ajoutGoal = () => {
         placeholder="Nouvel objectif"
         value={nvGoal}
         onChangeText={(text) => setnvGoal(text)}
-        
       />
-      <View style={styles.but}>
-        <Button
-        title="⊕"
-        onPress={ajoutGoal}
-        color="#fff"
-        fontSize={"20rem"}
-        /></View>
+      <View >
+        <Pressable onPress={ajoutGoal} style={styles.but}>
+        <Text style={styles.add}>⊕</Text>
+        </Pressable>
+      </View>
       
       <FlatList
         data={flatData}
@@ -143,14 +140,14 @@ const styles = StyleSheet.create({
   },
   input: {
     width: '80%',
-    marginBottom: 20,
+    marginBottom: 1,
     padding: 20,
     color: 'black',
     borderRadius: 5,
     borderColor: '#d1bebe',
     borderWidth: 1,
     flex: 1,
-    borderBottomWidth: 1,
+    borderBottomWidth: 3,
     marginRight: 10,
     fontWeight: 'bold',
     textAlign: 'center',
@@ -162,18 +159,31 @@ const styles = StyleSheet.create({
   },
   but:{
     borderColor: "##d1bebe",
-    backgroundColor: "black",
-    borderRadius: 50,
-    border: 1,
-    fontSize: 30,
+    // backgroundColor: "green",
+    borderRadius: "90",
+    
+    fontSize: 45,
     padding: 10,
-    margin: 10
+    margin: 10,
+    fontSize: 55,
+    fontWeight: 'bold',
+  },
+  add:{
+    fontSize: 50,
+    paddingBottom: '-10',
+    color: 'green'
+  },
+  delete:{
+    fontSize: 40,
   },
   buttonX:{
     width: 20,
-    height: 20,
-    borderRadius: 10,
-    backgroundColor: 'red'
+    paddingTop: 10,
+    paddingBottom: 0,
+    marginBottom: 10,
+    margin: 10,
+    height: 50,
+    alignSelf: 'center',
   }
 });
 export default App;
