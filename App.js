@@ -44,55 +44,69 @@ let sampleGoals = [{
 },
 ];
 
-const Item = ({name}) => (
+const Item = ({ id, name, onDelete }) => (
   <View style={styles.item}>
     <Text style={styles.name}>{name}</Text>
+    <Button title=" ᙭" onPress={onDelete}
+    style={styles.buttonX} />
   </View>
 );
 
+
 const App = () => {
-  const [newGoal, setNewGoal] = React.useState('');
+  
+ const [nvGoal, setnvGoal] = React.useState('');
+ const [flatData, setFlatData] = React.useState(sampleGoals);
 
-  const addGoal = () => {
-    if (!newGoal) {
-      Alert.alert('Veuillez saisir un objectif');
-      return;
-    }
+ const deleteGoals = (id) => {
+  const mjGoals = flatData.filter((goal) => goal.id !== id);
+  setnvGoal('');
+  setFlatData(mjGoals);
+  return mjGoals;
+}
+  
+const ajoutGoal = () => {
+  if (!nvGoal) {
+    Alert.alert('Veuillez saisir un objectif');
+    return;
+  }
 
-    const updatedGoals = [...sampleGoals, {
-      id: sampleGoals.length + 1,
-      name: newGoal,
-    }];
+  const mjGoals = [...sampleGoals, {
+    id: sampleGoals.length + 1,
+    name: nvGoal,
+    
+  }];
+    
+  sampleGoals = mjGoals;
+  setnvGoal('');
+  setFlatData(mjGoals);
+  const mjFlatData = sampleGoals.map((goal) => ({
+    id: goal.id,
+    name: goal.name,
+  }));
 
-    sampleGoals = updatedGoals;
-    setNewGoal('');
-
-    const updatedFlatListData = sampleGoals.map((goal) => ({
-      id: goal.id,
-      name: goal.name,
-    }));
-
-    return updatedFlatListData;
-  };
+  return mjFlatData;
+};
 
   return (
     <SafeAreaView style={styles.container}>
       <TextInput style={styles.input}
         placeholder="Nouvel objectif"
-        value={newGoal}
-        onChangeText={(text) => setNewGoal(text)}
+        value={nvGoal}
+        onChangeText={(text) => setnvGoal(text)}
         
       />
-      <Button
-        title="Add"
-        onPress={addGoal}
-        color={'black'}
-        backgroundColor={'#007AFF'}
-        borderBottomColor={'#737373'}
-        />
+      <View style={styles.but}>
+        <Button
+        title="⊕"
+        onPress={ajoutGoal}
+        color="#fff"
+        fontSize={"20rem"}
+        /></View>
+      
       <FlatList
-        data={sampleGoals}
-        renderItem={({item}) => <Item name={item.name} />}
+        data={flatData}
+        renderItem={({item}) => <Item name={item.name} id={item.id} onDelete={() => deleteGoals(item.id)}/>}
         keyExtractor={item => item.id}
       />
     </SafeAreaView>
@@ -114,9 +128,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
+    alignItems: 'center'
   },
   item: {
-    backgroundColor: 'grey',
+    backgroundColor: '#d1bebe',
     padding: 20,
     marginVertical: 30,
     marginHorizontal: 20,
@@ -129,9 +144,10 @@ const styles = StyleSheet.create({
   input: {
     width: '80%',
     marginBottom: 20,
-    padding: 15,
+    padding: 20,
+    color: 'black',
     borderRadius: 5,
-    borderColor: '#ccc',
+    borderColor: '#d1bebe',
     borderWidth: 1,
     flex: 1,
     borderBottomWidth: 1,
@@ -143,6 +159,21 @@ const styles = StyleSheet.create({
     color: 'black',
     fontWeight: 'bold',
     textAlign: 'center'
+  },
+  but:{
+    borderColor: "##d1bebe",
+    backgroundColor: "black",
+    borderRadius: 50,
+    border: 1,
+    fontSize: 30,
+    padding: 10,
+    margin: 10
+  },
+  buttonX:{
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    backgroundColor: 'red'
   }
 });
 export default App;
