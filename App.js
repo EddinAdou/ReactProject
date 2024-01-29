@@ -1,7 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, FlatList, SafeAreaView, TextInput, Button, Alert, Pressable } from 'react-native';
-
+import { StyleSheet, Text, View, FlatList, SafeAreaView, TextInput, Button, Alert, Pressable, Modal } from 'react-native';
+import Item from './src/Components/Item'; 
+import Todo from './src/Components/Todo';
+import Input from './src/Components/Input';
 let sampleGoals = [{
   id: "1",
   name: "Faire les courses"
@@ -43,24 +45,21 @@ let sampleGoals = [{
   name: "Faire un triathlon"
 },
 ];
-
-const Item = ({ id, name, onDelete }) => (
-  <View style={styles.item}>
-    <Text style={styles.name}>{name}</Text>
-    <Pressable  onPress={onDelete}
-    style={styles.buttonX} ><Text style={styles.delete}>✘</Text></Pressable>
-  </View>
-);
-
+<Item/>
 
 const App = () => {
-  
+
  const [nvGoal, setnvGoal] = React.useState('');
  const [flatData, setFlatData] = React.useState(sampleGoals);
+ const [isModalVisible, setIsModalVisible] = useState(false);
+
+ const toggleModal = () => {
+  setIsModalVisible(!isModalVisible);
+};
+
 
  const deleteGoals = (id) => {
   const mjGoals = flatData.filter((goal) => goal.id !== id);
-  setnvGoal('');
   setFlatData(mjGoals);
   return mjGoals;
 }
@@ -75,8 +74,7 @@ const ajoutGoal = () => {
     id: sampleGoals.length + 1,
     name: nvGoal,
     
-  }];
-    
+  }]; 
   sampleGoals = mjGoals;
   setnvGoal('');
   setFlatData(mjGoals);
@@ -89,11 +87,12 @@ const ajoutGoal = () => {
 };
 
   return (
+    
+    
     <SafeAreaView style={styles.container}>
-      <TextInput style={styles.input}
-        placeholder="Nouvel objectif"
-        value={nvGoal}
-        onChangeText={(text) => setnvGoal(text)}
+      <Todo/>
+
+      <TextInput style={[styles.input, { backgroundColor: 'white', color: 'black' }]} placeholder="Nouvel objectif" value={nvGoal} onChangeText={(text) => setnvGoal(text)} 
       />
       <View >
         <Pressable onPress={ajoutGoal} style={styles.but}>
@@ -103,7 +102,7 @@ const ajoutGoal = () => {
       
       <FlatList
         data={flatData}
-        renderItem={({item}) => <Item name={item.name} id={item.id} onDelete={() => deleteGoals(item.id)}/>}
+        renderItem={({item}) => <Item name={item.name} key={item.id} onDelete={() => deleteGoals(item.id)}/>}
         keyExtractor={item => item.id}
       />
     </SafeAreaView>
@@ -113,7 +112,7 @@ const ajoutGoal = () => {
 const styles = StyleSheet.create({
   containers: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#blue',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -125,18 +124,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
-    alignItems: 'center'
-  },
-  item: {
-    backgroundColor: '#d1bebe',
-    padding: 20,
-    marginVertical: 30,
-    marginHorizontal: 20,
-    borderRadius: 5,
-    fontWeight: 'bold'
+    alignItems: 'center',
+    backgroundColor: '#007FFF',
+    fontFamily: 'Impact',
   },
   title: {
     fontSize: 32,
+    fontFamily: 'Impact',
   },
   input: {
     width: '80%',
@@ -144,23 +138,16 @@ const styles = StyleSheet.create({
     padding: 20,
     color: 'black',
     borderRadius: 5,
-    borderColor: '#d1bebe',
+    borderColor: '#fac309',
     borderWidth: 1,
-    flex: 1,
     borderBottomWidth: 3,
     marginRight: 10,
     fontWeight: 'bold',
     textAlign: 'center',
-  },
-  name:{
-    color: 'black',
-    fontWeight: 'bold',
-    textAlign: 'center'
+    backgroundColor: '#ffff'
   },
   but:{
-    borderColor: "##d1bebe",
-    // backgroundColor: "green",
-    borderRadius: "90",
+    borderColor: "#09e8fa",
     
     fontSize: 45,
     padding: 10,
@@ -171,19 +158,9 @@ const styles = StyleSheet.create({
   add:{
     fontSize: 50,
     paddingBottom: '-10',
-    color: 'green'
+    color: '#030303',
   },
-  delete:{
-    fontSize: 40,
-  },
-  buttonX:{
-    width: 20,
-    paddingTop: 10,
-    paddingBottom: 0,
-    marginBottom: 10,
-    margin: 10,
-    height: 50,
-    alignSelf: 'center',
-  }
+ 
+  
 });
 export default App;
