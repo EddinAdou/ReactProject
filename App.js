@@ -17,31 +17,31 @@ let sampleGoals = [{
   name: "Monter à plus de 5000m d'altitude"
 },
 {
-  id: "3",
+  id: "4",
   name: "Acheter mon premier appartement"
 },
 {
-  id: "4",
+  id: "5",
   name: "Perdre 5 kgs"
 },
 {
-  id: "5",
+  id: "6",
   name: "Gagner en productivité"
 },
 {
-  id: "6",
+  id: "7",
   name: "Apprendre un nouveau langage"
 },
 {
-  id: "7",
+  id: "8",
   name: "Faire une mission en freelance"
 },
 {
-  id: "8",
+  id: "9",
   name: "Organiser un meetup autour de la tech"
 },
 {
-  id: "9",
+  id: "10",
   name: "Faire un triathlon"
 },
 ];
