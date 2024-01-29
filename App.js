@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, FlatList, SafeAreaView, TextInput, Button, Alert, Pressable, Modal } from 'react-native';
+import { StyleSheet, Text, View, FlatList, SafeAreaView, TextInput, Button, Alert, Pressable, Modal, TouchableOpacity } from 'react-native';
 import Item from './src/Components/Item'; 
 import Todo from './src/Components/Todo';
 import Input from './src/Components/Input';
@@ -92,8 +92,36 @@ const ajoutGoal = () => {
     <SafeAreaView style={styles.container}>
       <Todo/>
 
-      <TextInput style={[styles.input, { backgroundColor: 'white', color: 'black' }]} placeholder="Nouvel objectif" value={nvGoal} onChangeText={(text) => setnvGoal(text)} 
-      />
+      <Pressable onPress={toggleModal} style={styles.addButton}>
+        <Text style={styles.addButtonText}>Ajouter un objectif</Text>
+      </Pressable>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isModalVisible}
+        onRequestClose={() => {
+          setIsModalVisible(false);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <TextInput
+              style={styles.input}
+              placeholder="Nouvel objectif"
+              value={nvGoal}
+              onChangeText={(text) => setnvGoal(text)}
+            />
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity onPress={ajoutGoal} style={[styles.button, styles.buttonAdd]}>
+                <Text style={styles.buttonText}>Ajouter</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={toggleModal} style={[styles.button, styles.buttonCancel]}>
+                <Text style={styles.buttonText}>Annuler</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
       <View >
         <Pressable onPress={ajoutGoal} style={styles.but}>
         <Text style={styles.add}>⊕</Text>
@@ -125,7 +153,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
     alignItems: 'center',
-    backgroundColor: '#007FFF',
+    backgroundColor: '#fdfefe',
     fontFamily: 'Impact',
   },
   title: {
@@ -161,6 +189,69 @@ const styles = StyleSheet.create({
     color: '#030303',
   },
  
-  
+  centeredView:{
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  modalView: {
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+    fontSize: 18,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+    margin: 10,
+  },
+  buttonDelete: {
+    backgroundColor: 'red',
+  },
+  buttonCancel: {
+    backgroundColor: 'gray',
+  },
+  buttonAdd: {
+    backgroundColor: 'green',
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  addButton: {
+    backgroundColor: '#bdc3c7',
+    borderRadius: 20,
+    padding: 10,
+    margin: 10,
+    width: '80%',
+    alignSelf: 'center',
+  },
+  addButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 16,
+  },
 });
 export default App;

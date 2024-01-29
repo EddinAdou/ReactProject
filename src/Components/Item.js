@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Impact',
   },
   item: {
-    backgroundColor: '#fac309',
+    backgroundColor: '#f2f3f4',
     padding: 20,
     marginVertical: 30,
     marginHorizontal: 20,
@@ -59,7 +59,8 @@ const styles = StyleSheet.create({
   },
   delete:{
     fontSize: 40,
-    color: 'red'
+    color: 'red',
+    flex: 1,
   },
   buttonX:{
     width: 20,
