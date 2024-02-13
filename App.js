@@ -3,7 +3,9 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, FlatList, SafeAreaView, TextInput, Button, Alert, Pressable, Modal, TouchableOpacity } from 'react-native';
 import Item from './src/Components/Item'; 
 import Todo from './src/Components/Todo';
-import Input from './src/Components/Input';
+
+
+
 let sampleGoals = [{
   id: "1",
   name: "Faire les courses"
@@ -91,6 +93,7 @@ const ajoutGoal = () => {
     
     <SafeAreaView style={styles.container}>
       <Todo/>
+
 
       <Pressable onPress={toggleModal} style={styles.addButton}>
         <Text style={styles.addButtonText}>Ajouter un objectif</Text>

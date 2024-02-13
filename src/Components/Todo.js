@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Impact',
         fontSize: 20,
         fontWeight: 'bold',
-        paddingBottom: 5
+        paddingBottom: 5,
+        paddingTop: 15,
       }
 })
